@@ -17,6 +17,8 @@ https://www.kaggle.com/datasets/gregorut/videogamesales/data
 Metacritic Video Games Data:
 https://www.kaggle.com/datasets/brunovr/metacritic-videogames-data?resource=download
 
+The relevant features include the game title, release year, platform, publisher, genre, and global sales in the Video Game Sales dataset. The Metacritic dataset includes critic scores, user scores, release year equivalents such as the “r-date” field, developer names, and platforms. These shared fields will form the basis for the merge.
+
 ## Data Preparation
 
 As of this point I do not possess the capabilities to give a very detailed explanation on how the analysis will be made, but very crudely it can be explaind like:
@@ -30,6 +32,12 @@ Step II: Merging and Cleaning
 I will identify some keys to join them. Since both tables share many common merger points such as the name, year etc. It will be quite simple
 However, it is easy to observe several naming mismatches on common features such as Video Game Sales having Year and Metacritic Video Games Data having r-date to denote the same thing.
 I will properly align the data with each other before merging to avoid problems from aforementioned mismatches.
+
+After merging, I will clean the data by removing missing or inconsistent entries, correcting duplicated names, and resolving cases where different editions of the same game appear under slightly different titles.
+
+# Methodology
+
+The general plan is to examine whether critic and user scores correlate with commercial success. I will translate this into measurable variables taken directly from the datasets—for example, critic score, user score, global sales, release year, platform, and publisher reputation. After cleaning and merging, I will explore the relationships between these variables using descriptive statistics and then attempt to model whether the scores can predict sales. This may involve correlation analysis, simple regression experiments, and visual inspection of patterns across different game genres or publishers. Since this is an exploratory project, the analysis does not have to be extremely complex—as long as it can answer the basic question of whether scores meaningfully influence commercial outcomes.
 
 # Expected Outcomes
 
