@@ -51,4 +51,16 @@ II:  Bad ratings can turn a group of reluctant customers into an angry group who
 
 III: Lower rated games of previously acclaimed and successful studios will sell less than their higher rating games.
 
+# Exploratory Data Analysis
 
+After cleaning and merging the Video Game Sales dataset and the Metacritic dataset, the final dataset contained 2092 games with valid values for global sales, critic score, and user score. I examined the distributions of sales and ratings to understand the overall structure of the data. Global sales are heavily right-skewed, meaning most games sell very little while a small number reach extremely high sales. Critic and user scores show tighter distributions, typically clustering around the 60–90 range.
+
+Scatterplots between scores and sales show weak but visible upward trends. Games with higher critic or user scores tend to have somewhat higher sales, but the relationship is not visually strong. This is also reflected in the correlation matrix. Critic Score and log-sales have a correlation of 0.218, and User Score and log-sales have 0.153. Both are positive but small. These values indicate that ratings and sales move in the same direction on average, but the effect is limited.
+
+# Hypothesis Testing
+
+To test whether critic and user ratings are statistically associated with commercial performance, I performed Pearson correlation tests. The correlation between Critic Score and log-sales was r = 0.219 with p = 4.37e-24, and the correlation between User Score and log-sales was r = 0.153 with p = 1.85e-12. Both relationships are statistically significant due to the large sample size, but the effect sizes are small. This means ratings have a measurable but limited influence on sales.
+
+Next, I compared high-rated games (Critic Score ≥ 80) with low-rated games (Critic Score < 60). There were 547 high-rated and 408 low-rated games. A Welch t-test showed a highly significant difference between the two groups (t = 9.286, p = 1.32e-19). High-rated games had a mean log-sales of 0.512, while low-rated games averaged 0.229. This indicates that high-rated games tend to sell more than low-rated games on average.
+
+Finally, I fit a simple linear regression model using critic and user scores to predict log-sales. The model had an R² of 0.049, meaning scores explain about 5% of the variation in sales. Critic Score had a positive and statistically significant coefficient (p < 0.001), while User Score did not show significance at the 0.05 level. This supports the earlier finding that critic ratings have a stronger link to sales than user ratings, but overall, ratings alone are not strong predictors of commercial performance.
