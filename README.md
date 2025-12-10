@@ -106,7 +106,6 @@ meta = meta[[c for c in keep_cols_meta if c in meta.columns]]
 
 sales["Name_clean"]     = sales["Name"].str.lower().str.strip()
 sales["Platform_clean"] = sales["Platform"].str.lower().str.strip()
-
 meta["Name_clean"]      = meta["Name"].str.lower().str.strip()
 meta["Platform_clean"]  = meta["Platform"].str.lower().str.strip()
 
@@ -115,7 +114,7 @@ sales["Year"] = pd.to_numeric(sales["Year"], errors="coerce")
 if "Release_Date" in meta.columns:
     meta["Year_meta"] = pd.to_datetime(meta["Release_Date"], errors="coerce").dt.year
 else:
-    meta["Year_meta"] = np.nan  # fallback if Release_Date missing
+    meta["Year_meta"] = np.nan
 
 meta["Critic_Score"] = pd.to_numeric(meta["Critic_Score"], errors="coerce")
 meta["User_Score"]   = pd.to_numeric(meta["User_Score"], errors="coerce")
@@ -134,7 +133,6 @@ def year_close(row):
     return abs(row["Year"] - row["Year_meta"]) <= 1
 
 merged = merged[merged.apply(year_close, axis=1)]
-
 merged = merged.drop(columns=["Name_clean", "Platform_clean"])
 
 print("\nMerged shape:", merged.shape)
@@ -142,9 +140,7 @@ print("\nMerged columns:\n", merged.columns.tolist())
 print("\nMerged head:\n", merged.head())
 
 clean = merged.dropna(subset=["Global_Sales", "Critic_Score", "User_Score"]).copy()
-
 clean = clean[clean["Global_Sales"] > 0].copy()
-
 clean["log_sales"] = np.log1p(clean["Global_Sales"])
 
 print("\nClean dataset shape:", clean.shape)
