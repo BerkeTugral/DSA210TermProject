@@ -84,19 +84,16 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import statsmodels.api as sm
 
-
-# ======================================================================
 # 1. LOAD DATA (change filenames if your CSV names are different)
-# ======================================================================
+
 sales = pd.read_csv("vgsales.csv")
 meta  = pd.read_csv("games-data 2.csv")
 
 print("Sales shape:", sales.shape)
 print("Metacritic shape:", meta.shape)
 
-# ======================================================================
 # 2. SELECT RELEVANT COLUMNS AND STANDARDIZE NAMES
-# ======================================================================
+
 sales = sales[["Name", "Platform", "Year", "Genre", "Publisher",
                "NA_Sales", "EU_Sales", "JP_Sales", "Other_Sales", "Global_Sales"]]
 
@@ -132,9 +129,8 @@ else:
 meta["Critic_Score"] = pd.to_numeric(meta["Critic_Score"], errors="coerce")
 meta["User_Score"]   = pd.to_numeric(meta["User_Score"], errors="coerce")
 
-# ======================================================================
 # 3. MERGE DATASETS
-# ======================================================================
+
 merged = pd.merge(
     sales,
     meta,
@@ -158,9 +154,8 @@ print("\nMerged shape:", merged.shape)
 print("\nMerged columns:\n", merged.columns.tolist())
 print("\nMerged head:\n", merged.head())
 
-# ======================================================================
 # 4. BASIC CLEANING FOR ANALYSIS
-# ======================================================================
+
 # Keep rows where we have sales and both scores
 clean = merged.dropna(subset=["Global_Sales", "Critic_Score", "User_Score"]).copy()
 
@@ -173,9 +168,7 @@ clean["log_sales"] = np.log1p(clean["Global_Sales"])
 print("\nClean dataset shape:", clean.shape)
 print("\nMissingness:\n", clean.isna().mean().sort_values(ascending=False))
 
-# ======================================================================
 # 5. EXPLORATORY DATA ANALYSIS (EDA)
-# ======================================================================
 
 # Histograms
 plt.hist(clean["Global_Sales"], bins=50)
@@ -230,9 +223,7 @@ if "Genre" in clean.columns:
     ).sort_values("mean_sales", ascending=False)
     print("\nGenre summary (top rows):\n", genre_summary.head())
 
-# ======================================================================
 # 6. HYPOTHESIS TESTS
-# ======================================================================
 
 # 6.1 Pearson correlation significance tests
 r_critic, p_critic = stats.pearsonr(clean["Critic_Score"], clean["log_sales"])
