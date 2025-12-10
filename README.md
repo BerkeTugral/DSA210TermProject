@@ -84,21 +84,14 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import statsmodels.api as sm
 
-# 1. LOAD DATA (change filenames if your CSV names are different)
-
 sales = pd.read_csv("vgsales.csv")
 meta  = pd.read_csv("games-data 2.csv")
 
 print("Sales shape:", sales.shape)
 print("Metacritic shape:", meta.shape)
 
-# 2. SELECT RELEVANT COLUMNS AND STANDARDIZE NAMES
-
 sales = sales[["Name", "Platform", "Year", "Genre", "Publisher",
                "NA_Sales", "EU_Sales", "JP_Sales", "Other_Sales", "Global_Sales"]]
-
-Try to keep only typical columns from the Metacritic dataset.
-Adjust these names if your file uses slightly different ones.
 
 meta = meta.rename(columns={
     "name": "Name",
@@ -111,15 +104,11 @@ meta = meta.rename(columns={
 keep_cols_meta = ["Name", "Platform", "Release_Date", "Critic_Score", "User_Score"]
 meta = meta[[c for c in keep_cols_meta if c in meta.columns]]
 
-Standardize text for merge keys
-
 sales["Name_clean"]     = sales["Name"].str.lower().str.strip()
 sales["Platform_clean"] = sales["Platform"].str.lower().str.strip()
 
 meta["Name_clean"]      = meta["Name"].str.lower().str.strip()
 meta["Platform_clean"]  = meta["Platform"].str.lower().str.strip()
-
-Convert year info
 
 sales["Year"] = pd.to_numeric(sales["Year"], errors="coerce")
 
@@ -128,12 +117,8 @@ if "Release_Date" in meta.columns:
 else:
     meta["Year_meta"] = np.nan  # fallback if Release_Date missing
 
-Convert scores to numeric, handle "tbd" etc.
-
 meta["Critic_Score"] = pd.to_numeric(meta["Critic_Score"], errors="coerce")
 meta["User_Score"]   = pd.to_numeric(meta["User_Score"], errors="coerce")
-
-# 3. MERGE DATASETS
 
 merged = pd.merge(
     sales,
@@ -150,32 +135,20 @@ def year_close(row):
 
 merged = merged[merged.apply(year_close, axis=1)]
 
-Drop helper columns
-
 merged = merged.drop(columns=["Name_clean", "Platform_clean"])
 
 print("\nMerged shape:", merged.shape)
 print("\nMerged columns:\n", merged.columns.tolist())
 print("\nMerged head:\n", merged.head())
 
-# 4. BASIC CLEANING FOR ANALYSIS
-
-Keep rows where we have sales and both scores
-
 clean = merged.dropna(subset=["Global_Sales", "Critic_Score", "User_Score"]).copy()
 
-Remove obviously non-positive sales
-
 clean = clean[clean["Global_Sales"] > 0].copy()
-
-Log-transform sales to reduce skew
 
 clean["log_sales"] = np.log1p(clean["Global_Sales"])
 
 print("\nClean dataset shape:", clean.shape)
 print("\nMissingness:\n", clean.isna().mean().sort_values(ascending=False))
-
-# 5. EXPLORATORY DATA ANALYSIS (EDA)
 
 Histograms
 
@@ -234,18 +207,12 @@ if "Genre" in clean.columns:
     ).sort_values("mean_sales", ascending=False)
     print("\nGenre summary (top rows):\n", genre_summary.head())
 
-# 6. HYPOTHESIS TESTS
-
-6.1 Pearson correlation significance tests
-
 r_critic, p_critic = stats.pearsonr(clean["Critic_Score"], clean["log_sales"])
 r_user,   p_user   = stats.pearsonr(clean["User_Score"],   clean["log_sales"])
 
 print("\nPearson correlation tests:")
 print(f"Critic Score vs log_sales: r = {r_critic:.3f}, p = {p_critic:.3g}")
 print(f"User   Score vs log_sales: r = {r_user:.3f}, p = {p_user:.3g}")
-
-6.2 High-rated vs low-rated games t-test (Critic Score threshold)
 
 high = clean[clean["Critic_Score"] >= 80]["log_sales"]
 low  = clean[clean["Critic_Score"] < 60]["log_sales"]
@@ -261,8 +228,6 @@ if len(high) > 10 and len(low) > 10:
     print(f"mean log_sales (low)  = {low.mean():.3f}")
 else:
     print("\nNot enough data in high/low groups to run a stable t-test.")
-
-6.3 Simple linear regression: log_sales ~ Critic_Score + User_Score
 
 X = clean[["Critic_Score", "User_Score"]].copy()
 X = sm.add_constant(X)
