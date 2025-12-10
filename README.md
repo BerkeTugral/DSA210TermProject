@@ -69,7 +69,7 @@ This combination of descriptive and inferential techniques allows a structured a
 
 ---
 
-# Code
+# Code
 
 As a disclaimer I must state that I utilized the help of ChatGPT to help me code. However, after inspecting the code thoroughly I can confidently say that in my future projects I am able to do it on my own
 
@@ -150,8 +150,6 @@ clean["log_sales"] = np.log1p(clean["Global_Sales"])
 print("\nClean dataset shape:", clean.shape)
 print("\nMissingness:\n", clean.isna().mean().sort_values(ascending=False))
 
-Histograms
-
 plt.hist(clean["Global_Sales"], bins=50)
 plt.xlabel("Global Sales (millions)")
 plt.ylabel("Count")
@@ -176,8 +174,6 @@ plt.ylabel("Count")
 plt.title("Distribution of log Global Sales")
 plt.show()
 
-Scatterplots
-
 plt.scatter(clean["Critic_Score"], clean["Global_Sales"], alpha=0.4)
 plt.xlabel("Critic Score")
 plt.ylabel("Global Sales (millions)")
@@ -190,12 +186,8 @@ plt.ylabel("Global Sales (millions)")
 plt.title("User Score vs Global Sales")
 plt.show()
 
-Correlation matrix
-
 corr = clean[["Critic_Score", "User_Score", "Global_Sales", "log_sales"]].corr()
 print("\nCorrelation matrix:\n", corr)
-
-Optional: summary by genre
 
 if "Genre" in clean.columns:
     genre_summary = clean.groupby("Genre").agg(
