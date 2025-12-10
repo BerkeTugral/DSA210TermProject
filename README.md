@@ -287,22 +287,27 @@ Interpretation: Shows extreme right-skew in raw sales.
 
 Distribution of log Global Sales
 <img width="640" height="480" alt="DistributionLogOfGlobalSales" src="https://github.com/user-attachments/assets/255f982a-53c9-485c-9e00-7c69c682bf19" />
+
 Interpretation: Log transformation smooths the skew and makes analysis feasible.
 
 Distribution of Critic Scores
 <img width="640" height="480" alt="DistributionOfCriticScores" src="https://github.com/user-attachments/assets/915122ca-5020-4b77-8edb-4ee836a44fbd" />
+
 Interpretation: Critic scores cluster between 60–90.
 
 Distribution of User Scores
 <img width="640" height="480" alt="DistributionOfUserScores" src="https://github.com/user-attachments/assets/276f1024-6fb3-4def-b952-a181e7879f57" />
+
 Interpretation: User ratings are also centered around 6–8 but with more variance.
 
 Critic Score vs Global Sales
 <img width="640" height="480" alt="CriticScoreVsGlobalSales" src="https://github.com/user-attachments/assets/2e7be53e-9040-4e7d-82ef-a40767d08e70" />
+
 Interpretation: Weak positive trend, strong clustering, heavy outliers.
 
 User Score vs Global Sales
 <img width="640" height="480" alt="UserScoreVsGlobalSales" src="https://github.com/user-attachments/assets/d1b9c279-23c5-4d3c-a651-2b55542c1478" />
+
 Interpretation: Similar pattern to critic scores, but even weaker correlation.
 
 ---
