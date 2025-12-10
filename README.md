@@ -283,6 +283,7 @@ These results show statistically meaningful but weak associations between rating
 
 Distribution of Global Sales
 <img width="640" height="480" alt="Figure_1" src="https://github.com/user-attachments/assets/774f0820-ea65-450c-95c8-5f53c66c088f" />
+
 Interpretation: Shows extreme right-skew in raw sales.
 
 Distribution of log Global Sales
