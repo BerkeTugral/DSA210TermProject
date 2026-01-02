@@ -374,6 +374,37 @@ Critic scores have predictive power, but overall, ratings explain only ~5% of sa
 
 ---
 
+## Machine Learning Evaluation
+
+To complement the statistical analysis, a supervised machine learning model was applied to evaluate the predictive power of critic and user ratings on video game sales.
+
+A linear regression model was trained using a 75–25 train–test split. The target variable was the log-transformed global sales (log_sales), and the predictors were Critic Score and User Score.
+
+Model Performance (Test Set):
+
+The trained model produced the following results on unseen test data:
+
+R² = 0.0569
+
+RMSE = 0.4077
+
+These values indicate that critic and user ratings together explain only about 5.7% of the variance in global sales. While the relationship is statistically meaningful, the overall predictive strength of the model remains limited.
+
+
+Interpretation of Results:
+
+The machine learning results reinforce the statistical findings obtained earlier in the analysis:
+
+Critic scores contribute more predictive value than user scores.
+
+User scores are not statistically significant once critic scores are accounted for.
+
+Even when combined, review scores provide limited predictive power for commercial success.
+
+This suggests that while reviews influence consumer perception, they are not the dominant drivers of sales outcomes.
+
+---
+
 # Final Conclusion
 
 This project demonstrates that:
