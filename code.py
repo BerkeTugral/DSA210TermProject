@@ -147,3 +147,27 @@ y = clean["log_sales"]
 model = sm.OLS(y, X).fit()
 print("\nRegression summary:\n")
 print(model.summary())
+
+# ============================================================
+# Machine Learning: Train-Test Split Regression
+# ============================================================
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, root_mean_squared_error
+
+X = clean[["Critic_Score", "User_Score"]]
+y = clean["log_sales"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
+
+ml_model = LinearRegression()
+ml_model.fit(X_train, y_train)
+
+y_pred = ml_model.predict(X_test)
+
+print("\nML Model Performance (Test Set):")
+print("R²:", r2_score(y_test, y_pred))
+print("RMSE:", root_mean_squared_error(y_test, y_pred))
