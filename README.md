@@ -3,6 +3,8 @@
 **Mustafa Berke Tuğral – 30295**
 28 Oct 2025
 
+This is also my final report.
+
 ---
 
 ## Motivation
